@@ -27,6 +27,25 @@ const Mutations = {
 
     return user;
   },
+  async updateUser(parent, args, ctx, info) {
+    const updates = { ...args };
+    
+
+    if(updates.password) {
+      const password = await bcrypt.hash(args.password, 10);
+      updates.password = password;
+    }
+
+    delete updates.id;
+
+    return ctx.db.mutation.updateUser({
+      data: updates,
+      where: {
+        id: args.id
+      }
+    }, info);
+
+  },
   async signin(parent, { email, password }, ctx, info) {
 
     const user = await ctx.db.query.user({ where: { email }});
