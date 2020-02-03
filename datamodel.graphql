@@ -3,6 +3,11 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  resetToken: String
-  resetTokenExpiry: Float
+  images: [Image!]! @relation(link: INLINE)
+}
+
+type Image {
+  id: ID! @id
+  url: String!
+  user: User!
 }
