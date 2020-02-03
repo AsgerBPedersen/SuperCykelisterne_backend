@@ -27,6 +27,26 @@ const Mutations = {
 
     return user;
   },
+  async createImage(parent, args, ctx, info) {
+    if(!ctx.request.userId) {
+      throw new Error('Du skal være logged ind for at uploade et billed.');
+    }
+
+    const image = await ctx.db.mutation.createImage({
+      data: {
+        user : {
+          connect : {
+            id: ctx.request.userId
+          }
+        },
+        ...args,
+      }
+    }, info);
+
+    console.log(image);
+
+    return image
+  },
   async updateUser(parent, args, ctx, info) {
     const updates = { ...args };
     
