@@ -4,6 +4,7 @@ type Mutation {
    createUser(name: String!, email: String!, password: String!) : User!
    createImage(url: String!): Image!
    updateUser(id: ID!, name: String, password: String): User!
+   deleteImage(id: ID!): Image!
    signin(email: String!, password:String!): User!
    signout: String!
 }
