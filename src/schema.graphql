@@ -12,4 +12,5 @@ type Mutation {
 type Query {
    currentUser: User
    users: [User]!
+   randomPhotos: [Image!]!
 }
