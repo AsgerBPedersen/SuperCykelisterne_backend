@@ -7,6 +7,11 @@ const Mutations = {
 
     const password = await bcrypt.hash(args.password, 10);
 
+    const email = await ctx.db.query.user({where: {email:args.email}});
+      if(email) {
+        throw new Error(`Denne email er allerede i brug.`);
+      }
+
     const user = await ctx.db.mutation.createUser(
       {
         data: {
@@ -76,13 +81,13 @@ const Mutations = {
     const user = await ctx.db.query.user({ where: { email } });
 
     if (!user) {
-      throw new Error("No user with that email found.");
+      throw new Error("Ingen bruger med den email.");
     }
 
     const valid = await bcrypt.compare(password, user.password);
 
     if (!valid) {
-      throw new Error("invalid password");
+      throw new Error("Ugyldigt password.");
     }
 
     const token = jwt.sign({ userId: user.id }, "SuperSecretKey");
