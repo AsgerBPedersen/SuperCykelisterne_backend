@@ -3,11 +3,12 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  images: [Image!]! @relation(link: INLINE)
+  images: [Image!]! 
+  yndlingshund: String
 }
 
 type Image {
   id: ID! @id
   url: String!
-  user: User!
+  user: User! @relation(link: INLINE)
 }
