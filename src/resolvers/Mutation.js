@@ -79,7 +79,7 @@ const Mutations = {
       throw new Error("No user with that email found.");
     }
 
-    const valid = bcrypt.compare(password, user.password);
+    const valid = await bcrypt.compare(password, user.password);
 
     if (!valid) {
       throw new Error("invalid password");
